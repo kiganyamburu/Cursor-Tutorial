@@ -36,7 +36,7 @@ scene("game", () => {
   const player = add([
     rect(32, 32),
     color(255, 100, 100), // Red square
-    pos(100, 300),
+    pos(100, height() - 72), // Start on the ground, away from enemies
     body(),
     area(),
     "player",
@@ -156,23 +156,24 @@ scene("game", () => {
   });
 
   // Add enemies (moving squares)
-  const enemies = [
-    { x: 250, y: 430, dir: 1 },
-    { x: 600, y: 230, dir: -1 },
+  // Enemies patrol from the left to the right edge of the window
+  const enemyPatrols = [
+    { x: 100, y: 430, left: 0, right: width() - 28, dir: 1 },
+    { x: 700, y: 230, left: 0, right: width() - 28, dir: -1 },
   ];
-  enemies.forEach((enemy) => {
+  enemyPatrols.forEach((enemy) => {
     const e = add([
       rect(28, 28),
       color(0, 0, 0), // Black enemy
       pos(enemy.x, enemy.y),
       area(),
-      { dir: enemy.dir, speed: 80 },
+      { dir: enemy.dir, speed: 80, left: enemy.left, right: enemy.right },
       "enemy",
     ]);
     e.onUpdate(() => {
       e.move(e.speed * e.dir, 0);
-      // Reverse direction at platform edges
-      if (e.pos.x < 200 || e.pos.x > 700) {
+      // Reverse direction at window edges
+      if (e.pos.x < e.left || e.pos.x > e.right) {
         e.dir *= -1;
       }
     });
