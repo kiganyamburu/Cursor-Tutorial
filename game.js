@@ -151,6 +151,67 @@ scene("game", () => {
     scoreText.value = score;
   });
 
+  // Add enemies (moving squares)
+  const enemies = [
+    { x: 250, y: 430, dir: 1 },
+    { x: 600, y: 230, dir: -1 },
+  ];
+  enemies.forEach((enemy) => {
+    const e = add([
+      rect(28, 28),
+      color(0, 0, 0), // Black enemy
+      pos(enemy.x, enemy.y),
+      area(),
+      body({ isStatic: true }),
+      { dir: enemy.dir, speed: 80 },
+      "enemy",
+    ]);
+    e.onUpdate(() => {
+      e.move(e.speed * e.dir, 0);
+      // Reverse direction at platform edges
+      if (e.pos.x < 200 || e.pos.x > 700) {
+        e.dir *= -1;
+      }
+    });
+  });
+
+  // Add spikes (stationary hazards)
+  const spikes = [
+    { x: 420, y: 330 },
+    { x: 320, y: 130 },
+  ];
+  spikes.forEach((spike) => {
+    add([
+      rect(24, 12),
+      color(255, 0, 0), // Red spike
+      pos(spike.x, spike.y + 8),
+      area(),
+      "spike",
+    ]);
+  });
+
+  // Player collision with enemies or spikes
+  player.onCollide("enemy", () => {
+    if (!gameOver) {
+      gameOver = true;
+      add([
+        text("Game Over! Press R to restart", { size: 32 }),
+        pos(center().x - 200, center().y),
+        color(255, 0, 0),
+      ]);
+    }
+  });
+  player.onCollide("spike", () => {
+    if (!gameOver) {
+      gameOver = true;
+      add([
+        text("Game Over! Press R to restart", { size: 32 }),
+        pos(center().x - 200, center().y),
+        color(255, 0, 0),
+      ]);
+    }
+  });
+
   // Fall off screen
   player.onUpdate(() => {
     if (player.pos.y > height() + 100) {
