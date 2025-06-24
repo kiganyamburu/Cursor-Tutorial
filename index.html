@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Square Platformer - Kaboom.js</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #2c3e50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+      .instructions {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="instructions">
+      <h3>Controls:</h3>
+      <p>A/D or ←/→ - Move Left/Right</p>
+      <p>W or ↑ or SPACE - Jump</p>
+      <p>R - Restart Game</p>
+    </div>
+
+    <script src="https://unpkg.com/kaboom@3000.0.1/dist/kaboom.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
