@@ -162,7 +162,6 @@ scene("game", () => {
       color(0, 0, 0), // Black enemy
       pos(enemy.x, enemy.y),
       area(),
-      body({ isStatic: true }),
       { dir: enemy.dir, speed: 80 },
       "enemy",
     ]);
