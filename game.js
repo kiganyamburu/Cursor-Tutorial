@@ -20,6 +20,10 @@ let gameOver = false;
 
 // Game scene
 scene("game", () => {
+  // Reset game state
+  score = 0;
+  gameOver = false;
+
   // Background
   add([
     rect(width(), height()),
